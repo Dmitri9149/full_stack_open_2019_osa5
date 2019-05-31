@@ -32,7 +32,7 @@ const App = () => {
       setErrorMessage('käyttäjätunnus tai salasana virheellinen')
       setTimeout(() => {
         setErrorMessage(null)
-      }, 5000)
+      }, 100000)
     }
   }
 
@@ -40,6 +40,9 @@ const App = () => {
     return (
       <div>
         <h2>Log in to application</h2>
+        <div>
+          <p>{errorMessage}</p>
+        </div>
         <form onSubmit={handleLogin}>
         <div>
           käyttäjätunnus
