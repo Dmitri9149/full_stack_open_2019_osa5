@@ -41,42 +41,6 @@ const App = () => {
     }
   }
 
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <div>
-        newTitle
-        <input
-          type = 'text'
-          value={newTitle}
-          name= 'newtitle'
-          onChange={({ target }) => setNewTitle(target.value)}
-        />
-      </div>
-      <div>
-        newAuthor
-        <input
-          value={newAuthor}
-          onChange={({ target }) => setNewAuthor(target.value)}
-        />
-      </div>
-      <div>
-        newUrl
-        <input
-          value={newUrl}
-          onChange={({ target }) => setNewUrl(target.value)}
-        />
-      </div>
-      <div>
-        newLikes
-        <input
-          value={newLikes}
-          onChange={({ target }) => setNewLikes(target.value)}
-        />
-      </div>
-      <button type="submit">tallenna</button>
-    </form>  
-  )
-
   const addBlog = (event) => {
     event.preventDefault()
     const blogObject = {
@@ -137,8 +101,11 @@ const App = () => {
         </button>
       </div>
         <h2>New Blog</h2>
-        {blogForm()}
-
+        <NewBlogAddition addBlog = {addBlog} 
+                        newAuthor = {newAuthor} setNewAuthor = {setNewAuthor}
+                        newTitle = {newTitle} setNewTitle ={setNewTitle}
+                        newUrl = {newUrl} setNewUrl = {setNewUrl}
+        />
       <div>
 
       </div>
@@ -148,5 +115,41 @@ const App = () => {
     </div>
   )
 }
+
+const NewBlogAddition = ({
+  addBlog, 
+  newTitle, setNewTitle,
+  newAuthor, setNewAuthor, 
+  newUrl, setNewUrl }) => {
+  return(
+  <form onSubmit={addBlog}>
+    <div>
+      title
+      <input
+        type = 'text'
+        value={newTitle}
+        name= 'newtitle'
+        onChange={({ target }) => setNewTitle(target.value)}
+      />
+    </div>
+    <div>
+      author
+      <input
+        value={newAuthor}
+        onChange={({ target }) => setNewAuthor(target.value)}
+      />
+    </div>
+    <div>
+      url
+      <input
+        value={newUrl}
+        onChange={({ target }) => setNewUrl(target.value)}
+      />
+    </div>
+    
+  </form>
+  )  
+}
+
 
 export default App
