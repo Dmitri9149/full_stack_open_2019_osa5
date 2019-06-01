@@ -6,6 +6,10 @@ import blogService from './services/blogs'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newTitle, setNewTitle] = useState('')
+  const [newUrl, setNewUrl] = useState('')
+  const [newLikes, setNewLikes] = useState(0)
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
@@ -36,6 +40,60 @@ const App = () => {
       }, 100000)
     }
   }
+
+  const blogForm = () => (
+    <form onSubmit={addBlog}>
+      <div>
+        newTitle
+        <input
+          type = 'text'
+          value={newTitle}
+          name= 'newtitle'
+          onChange={({ target }) => setNewTitle(target.value)}
+        />
+      </div>
+      <div>
+        newAuthor
+        <input
+          value={newAuthor}
+          onChange={({ target }) => setNewAuthor(target.value)}
+        />
+      </div>
+      <div>
+        newUrl
+        <input
+          value={newUrl}
+          onChange={({ target }) => setNewUrl(target.value)}
+        />
+      </div>
+      <div>
+        newLikes
+        <input
+          value={newLikes}
+          onChange={({ target }) => setNewLikes(target.value)}
+        />
+      </div>
+      <button type="submit">tallenna</button>
+    </form>  
+  )
+
+  const addBlog = (event) => {
+    event.preventDefault()
+    const blogObject = {
+      author: newAuthor,
+      title: newTitle,
+      url:newUrl,
+      likes:newLikes
+    }
+    blogService
+    .create(blogObject).then(returnedBlog => {
+      setBlogs(blogs.concat(returnedBlog))
+      setNewTitle('')
+      setNewAuthor('')
+      setNewUrl('')
+      setNewLikes('')
+    })
+}
 
   if (user === null) {
     return (
@@ -77,6 +135,12 @@ const App = () => {
         <button onClick = {() => {setUser(null)} }>
         logout
         </button>
+      </div>
+        <h2>New Blog</h2>
+        {blogForm()}
+
+      <div>
+
       </div>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
