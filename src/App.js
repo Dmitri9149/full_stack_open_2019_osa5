@@ -25,6 +25,7 @@ const App = () => {
         username, password,
       })
 
+      blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
