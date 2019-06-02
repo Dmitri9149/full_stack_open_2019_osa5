@@ -2,6 +2,7 @@ import loginService from './services/login'
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
+import LoginForm from './components/LoginForm'
 
 const Notification = ({ notification }) => {
   if (notification.message === null) {
@@ -37,6 +38,7 @@ const App = () => {
   const [notification, setNotification] = useState({
     message: null
   })
+  const [loginVisible, setLoginVisible] = useState(false)
 
 
   useEffect(() => {
@@ -85,37 +87,38 @@ const App = () => {
     })
 }
 
-  if (user === null) {
-    return (
-      <div>
-        <h2>Log in to application</h2>
-        <div>
-        <Notification notification={notification} />
-        </div>
-        <form onSubmit={handleLogin}>
-        <div>
-          käyttäjätunnus
-            <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          salasana
-            <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">kirjaudu</button>
-      </form>
+const loginForm = () => {
+  const hideWhenVisible = { display: loginVisible ? 'none' : '' }
+  const showWhenVisible = { display: loginVisible ? '' : 'none' }
+
+  return (
+    <div>
+      <div style={hideWhenVisible}>
+        <button onClick={() => setLoginVisible(true)}>log in</button>
       </div>
-    )
-  }
+      <div style={showWhenVisible}>
+        <LoginForm
+          username={username}
+          password={password}
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleSubmit={handleLogin}
+        />
+        <button onClick={() => setLoginVisible(false)}>cancel</button>
+      </div>
+    </div>
+  )
+}
+
+if (user === null) {
+  return (
+    <div>
+      <h2>Log in to application</h2>
+        {loginForm()}
+    </div>
+  )
+}
+  
 
   return (
     <div>
@@ -145,6 +148,7 @@ const App = () => {
     </div>
   )
 }
+
 
 const NewBlogAddition = ({
   addBlog, 

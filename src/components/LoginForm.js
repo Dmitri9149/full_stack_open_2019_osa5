@@ -31,3 +31,7 @@ const LoginForm = ({
       </form>
     </div>
   )
+
+}
+
+export default LoginForm
