@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
+import Togglable from './components/Togglable'
+import BlogForm from './components/BlogForm'
 
 const Notification = ({ notification }) => {
   if (notification.message === null) {
@@ -38,7 +40,7 @@ const App = () => {
   const [notification, setNotification] = useState({
     message: null
   })
-  const [loginVisible, setLoginVisible] = useState(false)
+  
 
 
   useEffect(() => {
@@ -87,16 +89,13 @@ const App = () => {
     })
 }
 
-const loginForm = () => {
-  const hideWhenVisible = { display: loginVisible ? 'none' : '' }
-  const showWhenVisible = { display: loginVisible ? '' : 'none' }
 
+
+if (user === null) {
   return (
     <div>
-      <div style={hideWhenVisible}>
-        <button onClick={() => setLoginVisible(true)}>log in</button>
-      </div>
-      <div style={showWhenVisible}>
+      <h2>Log in to application</h2>
+      <Togglable buttonLabel='login'>
         <LoginForm
           username={username}
           password={password}
@@ -104,17 +103,8 @@ const loginForm = () => {
           handlePasswordChange={({ target }) => setPassword(target.value)}
           handleSubmit={handleLogin}
         />
-        <button onClick={() => setLoginVisible(false)}>cancel</button>
-      </div>
-    </div>
-  )
-}
-
-if (user === null) {
-  return (
-    <div>
-      <h2>Log in to application</h2>
-        {loginForm()}
+      </Togglable>
+        
     </div>
   )
 }
@@ -133,12 +123,17 @@ if (user === null) {
         </button>
       </div>
         <h2>New Blog</h2>
-        <NewBlogAddition 
-          addBlog = {addBlog} 
-          newAuthor = {newAuthor} setNewAuthor = {setNewAuthor}
-          newTitle = {newTitle} setNewTitle ={setNewTitle}
-          newUrl = {newUrl} setNewUrl = {setNewUrl}
-        />
+        <Togglable buttonLabel="new blog">
+          <BlogForm
+            onSubmit={addBlog}
+            newTitle={newTitle}
+            newAuthor={newAuthor}
+            newUrl={newUrl}
+            setNewTitle = {setNewTitle}
+            setNewAuthor = {setNewAuthor} 
+            setNewUrl = {setNewUrl}
+          />
+        </Togglable>
       <div>
 
       </div>
@@ -148,43 +143,5 @@ if (user === null) {
     </div>
   )
 }
-
-
-const NewBlogAddition = ({
-  addBlog, 
-  newTitle, setNewTitle,
-  newAuthor, setNewAuthor, 
-  newUrl, setNewUrl }) => {
-  return(
-  <form onSubmit={addBlog}>
-    <div>
-      title
-      <input
-        type = 'text'
-        value={newTitle}
-        name= 'newtitle'
-        onChange={({ target }) => setNewTitle(target.value)}
-      />
-    </div>
-    <div>
-      author
-      <input
-        value={newAuthor}
-        onChange={({ target }) => setNewAuthor(target.value)}
-      />
-    </div>
-    <div>
-      url
-      <input
-        value={newUrl}
-        onChange={({ target }) => setNewUrl(target.value)}
-      />
-    </div>
-
-    <button type="submit">create</button>
-  </form>
-  )  
-}
-
 
 export default App
