@@ -1,8 +1,29 @@
 import loginService from './services/login' 
-
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
+
+const Notification = ({ notification }) => {
+  if (notification.message === null) {
+    return null
+  }
+
+  const style = {
+    color: notification.type === 'error' ? 'red' : 'green',
+    background: 'Orange',
+    fontSize: 20,
+    borderStyle: 'solid',
+    borderRadius: 2,
+    padding: 10,
+    marginBottom: 10,
+  }
+
+  return (
+    <div style={style}>
+      {notification.message}
+    </div>
+  )
+}
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -13,7 +34,9 @@ const App = () => {
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [notification, setNotification] = useState({
+    message: null
+  })
 
 
   useEffect(() => {
@@ -22,6 +45,11 @@ const App = () => {
     )  
   }, [])
 
+  const notify = (message, type='success') => {
+    setNotification({ message, type })
+    setTimeout(() => setNotification({ message: null }), 10000)
+  }
+  
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -34,10 +62,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('käyttäjätunnus tai salasana virheellinen')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 100000)
+      notify(`wrong username or password`)
     }
   }
 
@@ -52,6 +77,7 @@ const App = () => {
     blogService
     .create(blogObject).then(returnedBlog => {
       setBlogs(blogs.concat(returnedBlog))
+      notify(`a new blog ${newTitle} by ${newAuthor} added`)
       setNewTitle('')
       setNewAuthor('')
       setNewUrl('')
@@ -64,7 +90,7 @@ const App = () => {
       <div>
         <h2>Log in to application</h2>
         <div>
-          <p>{errorMessage}</p>
+        <Notification notification={notification} />
         </div>
         <form onSubmit={handleLogin}>
         <div>
@@ -94,6 +120,9 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+
+      <Notification notification={notification} />
+
       <p>{user.name} logged in</p>
       <div>
         <button onClick = {() => {setUser(null)} }>
@@ -101,10 +130,11 @@ const App = () => {
         </button>
       </div>
         <h2>New Blog</h2>
-        <NewBlogAddition addBlog = {addBlog} 
-                        newAuthor = {newAuthor} setNewAuthor = {setNewAuthor}
-                        newTitle = {newTitle} setNewTitle ={setNewTitle}
-                        newUrl = {newUrl} setNewUrl = {setNewUrl}
+        <NewBlogAddition 
+          addBlog = {addBlog} 
+          newAuthor = {newAuthor} setNewAuthor = {setNewAuthor}
+          newTitle = {newTitle} setNewTitle ={setNewTitle}
+          newUrl = {newUrl} setNewUrl = {setNewUrl}
         />
       <div>
 
