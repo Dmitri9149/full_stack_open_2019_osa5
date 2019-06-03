@@ -87,7 +87,7 @@ const App = () => {
       setNewUrl('')
       setNewLikes('')
     })
-}
+  }
 
 
 
