@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const Blog = ({ blog }) => {
+
+
+const Blog = ({ blog, creatorName }) => {
+  const [loginVisible, setLoginVisible] = useState(true)
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -9,29 +12,52 @@ const Blog = ({ blog }) => {
     marginBottom: 5
   }
 
-  return (
-    <div style={blogStyle}>
-      <div onClick={() => console.log('clicked')}>
-        {blog.title} {blog.author}
-      </div>
+  
+    const showAll = { display: loginVisible ? 'none' : '' }
+    const showPartly = { display: loginVisible ? '' : 'none' }
 
-      <div>
-        {blog.author}
-      </div>
+    return (
+      
+      <div style = {blogStyle}>
+        <div style = {showPartly}>
+          <div onClick={() => setLoginVisible(false)}>
+            {blog.title} {blog.author}
+          </div>
+        </div>
 
-      <div>
-        <p>
-          {blog.likes}
-          &emsp;
-          likes
-          &emsp;
-          <button type="submit">
-            like
-          </button>
-        </p>
-      </div>
+        <div style = {showAll}>
+          <div onClick={() => setLoginVisible(true)}>
+            {blog.title} {blog.author}
+          </div>
 
-  </div>
-)}
+          <div>
+          { blog.url}
+          </div>
+
+          <div>
+            <p>
+              &ensp;
+              {blog.likes}
+              &ensp;
+              likes
+              &ensp;
+              <button type="submit">
+                like
+              </button>
+            </p>
+            <p>
+              &ensp;
+              added by 
+              &ensp;
+              {blog.user.name}
+              &ensp;
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    ) 
+  }
 
 export default Blog
