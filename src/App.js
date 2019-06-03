@@ -125,13 +125,12 @@ if (user === null) {
         <h2>New Blog</h2>
         <Togglable buttonLabel="new blog">
           <BlogForm
-            onSubmit={addBlog}
+            addBlog={addBlog}
             newTitle={newTitle}
-            newAuthor={newAuthor}
             newUrl={newUrl}
+            setNewUrl ={setNewUrl}
+            setNewAuthor = {setNewAuthor}
             setNewTitle = {setNewTitle}
-            setNewAuthor = {setNewAuthor} 
-            setNewUrl = {setNewUrl}
           />
         </Togglable>
       <div>
