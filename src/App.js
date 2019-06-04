@@ -125,6 +125,21 @@ const App = () => {
 
   }
 
+  const deleteBlogOf = async (id) => {
+    try {
+      const blog = blogs.find(blog => blog.id === id)
+      if (window.confirm(`Poistetaanko   "${blog.title}"  ?`)) {
+        await blogService.del(id)
+        const renewedBlogs = await blogService.getAll()
+        setBlogs(sortBlogs(renewedBlogs))
+        notify(`the blog is deleted`)
+      }
+    } catch (exception) {
+        notify(`something is wrong with deliting of the blog`)
+    }
+  }
+
+
   const sortBlogs = (blogs) => blogs.sort((b,a) => (a.likes-b.likes))
 
 if (user === null) {
