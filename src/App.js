@@ -95,6 +95,9 @@ if (user === null) {
   return (
     <div>
       <h2>Log in to application</h2>
+
+      <Notification notification={notification} />
+
       <Togglable buttonLabel='login'>
         <LoginForm
           username={username}
