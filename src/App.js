@@ -89,6 +89,27 @@ const App = () => {
     })
   }
 
+  const handleLikesOf = (blog)=> {
+    try {
+      const changedBlog = {
+        title:blog.title,
+        author:blog.author,
+        url:blog.url,
+        likes:blog.likes +1,
+        user:blog.user.id
+      }
+
+      const id = blog.id
+
+      blogService.update(id, changedBlog).then(response => {
+        setBlogs(blogs.map(blog => blog.id !== id ? blog : response.data))
+      })
+    } catch (exception) {
+      notify(`something is wrong with updates due to likes handling`)
+    }
+
+  }
+
 
 
 if (user === null) {
@@ -144,7 +165,11 @@ if (user === null) {
 
       </div>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog 
+        key={blog.id}
+        blog={blog} 
+        handleLikes = {()=> handleLikesOf(blog)}
+      />
       )}
     </div>
   )
