@@ -43,10 +43,13 @@ const App = () => {
   
 
 
-  useEffect(() => {
-    blogService.getAll().then(blogs =>
+  useEffect(async () => {
+    try { 
+    const blogs = await blogService.getAll()
       setBlogs( blogs )
-    )  
+    } catch(exception) {
+      notify('something is wrong insied useEffect getting blogs')
+    }  
   }, [])
 
   const notify = (message, type='success') => {
@@ -103,8 +106,9 @@ const App = () => {
 
       const id = blog.id
 
-      const blogNew = await blogService.update(id, changedBlog)
-      setBlogs(blogs.map(blog => blog.id !== id ? blog : blogNew))
+      await blogService.update(id, changedBlog)
+      const renewedBlogs = await blogService.getAll()
+      setBlogs(renewedBlogs)
 
     } catch (exception) {
       notify(`something is wrong with updates due to likes handling`)
