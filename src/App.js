@@ -121,7 +121,11 @@ if (user === null) {
 
       <p>{user.name} logged in</p>
       <div>
-        <button onClick = {() => {setUser(null)} }>
+        <button onClick = {() => {
+          setUser(null)
+          blogService.setToken(null)
+          }}
+        >
         logout
         </button>
       </div>
