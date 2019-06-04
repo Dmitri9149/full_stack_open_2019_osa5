@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 
 
-const Blog = ({ blog, creatorName }) => {
+const Blog = ({ blog, handleLikes }) => {
   const [loginVisible, setLoginVisible] = useState(true)
   const blogStyle = {
     paddingTop: 10,
@@ -41,7 +41,7 @@ const Blog = ({ blog, creatorName }) => {
               &ensp;
               likes
               &ensp;
-              <button type="submit">
+              <button onClick = {()=> handleLikes()}>
                 like
               </button>
             </p>
