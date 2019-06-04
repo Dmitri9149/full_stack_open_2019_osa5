@@ -112,8 +112,6 @@ const App = () => {
         user:blog.user.id
       }
 
-      console.log('changedBlog   ', changedBlog)
-
       const id = blog.id
 
       await blogService.update(id, changedBlog)
@@ -145,6 +143,11 @@ const App = () => {
 
 
   const sortBlogs = (blogs) => blogs.sort((b,a) => (a.likes-b.likes))
+
+  const determineWhenVisible =  (blog, user) => { 
+    const condition = (blog.user.username === user.username)
+    return {display: condition ? '' : 'none' }
+  }
 
 if (user === null) {
   return (
@@ -204,6 +207,7 @@ if (user === null) {
         blog={blog} 
         handleLikes = {()=> handleLikesOf(blog)}
         deleteBlog = {() => deleteBlogOf(blog.id)}
+        displayOrNot = {determineWhenVisible(blog, user)}
       />
       )}
     </div>

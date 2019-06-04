@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 
 
-const Blog = ({ blog, handleLikes, deleteBlog }) => {
+const Blog = ({ blog, handleLikes, deleteBlog, displayOrNot }) => {
   const [loginVisible, setLoginVisible] = useState(true)
   const blogStyle = {
     paddingTop: 10,
@@ -52,12 +52,14 @@ const Blog = ({ blog, handleLikes, deleteBlog }) => {
               {blog.user.name}
               &ensp;
             </p>
-            <p>
-              &ensp;
-              <button onClick = {deleteBlog}>
-                remove
-              </button>
-            </p>
+            <div style = {displayOrNot } >
+              <p>
+                &ensp;
+                <button  onClick = {deleteBlog}>
+                  remove
+                </button>
+              </p>
+            </div>
           </div>
 
         </div>
