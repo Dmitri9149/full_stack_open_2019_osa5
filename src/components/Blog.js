@@ -54,9 +54,8 @@ const Blog = ({ blog, handleLikes, deleteBlog }) => {
             </p>
             <p>
               &ensp;
-              delete
-              &ensp;
               <button onClick = {deleteBlog}>
+                remove
               </button>
             </p>
           </div>

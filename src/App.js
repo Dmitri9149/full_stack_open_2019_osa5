@@ -41,16 +41,19 @@ const App = () => {
     message: null
   })
   
+  useEffect(() => {
+    getAll()
+  }, [])
 
 
-  useEffect(async () => {
+  const getAll = async () => {
     try { 
     const blogs = await blogService.getAll()
       setBlogs( sortBlogs(blogs) )
     } catch(exception) {
       notify('something is wrong insied useEffect getting blogs')
     }  
-  }, [])
+  }
 
   const notify = (message, type='success') => {
     setNotification({ message, type })
@@ -64,7 +67,7 @@ const App = () => {
         username, password,
       })
 
-      blogService.setToken(user.token)
+      await blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
@@ -98,8 +101,6 @@ const App = () => {
     
   }
 
-
-
   const handleLikesOf = async (blog)=> {
     try {
 
@@ -126,10 +127,13 @@ const App = () => {
   }
 
   const deleteBlogOf = async (id) => {
+    
     try {
+      console.log('id -------------->', id)
       const blog = blogs.find(blog => blog.id === id)
       if (window.confirm(`Poistetaanko   "${blog.title}"  ?`)) {
-        await blogService.del(id)
+        const res = await blogService.del(id)
+        console.log('after delete method', res)
         const renewedBlogs = await blogService.getAll()
         setBlogs(sortBlogs(renewedBlogs))
         notify(`the blog is deleted`)
@@ -199,6 +203,7 @@ if (user === null) {
         key={blog.id}
         blog={blog} 
         handleLikes = {()=> handleLikesOf(blog)}
+        deleteBlog = {() => deleteBlogOf(blog.id)}
       />
       )}
     </div>
