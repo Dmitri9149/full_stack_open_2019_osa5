@@ -46,7 +46,7 @@ const App = () => {
   useEffect(async () => {
     try { 
     const blogs = await blogService.getAll()
-      setBlogs( blogs )
+      setBlogs( sortBlogs(blogs) )
     } catch(exception) {
       notify('something is wrong insied useEffect getting blogs')
     }  
@@ -73,27 +73,36 @@ const App = () => {
     }
   }
 
-  const addBlog = (event) => {
+  const addBlog = async (event) => {
+    try {
     event.preventDefault()
+
     const blogObject = {
       author: newAuthor,
       title: newTitle,
       url:newUrl,
       likes:newLikes
     }
-    blogService
-    .create(blogObject).then(returnedBlog => {
-      setBlogs(blogs.concat(returnedBlog))
+
+    await blogService.create(blogObject)
+    const renewedBlogs = await blogService.getAll()
+      setBlogs(sortBlogs(renewedBlogs))
       notify(`a new blog ${newTitle} by ${newAuthor} added`)
       setNewTitle('')
       setNewAuthor('')
       setNewUrl('')
       setNewLikes('')
-    })
+    } catch(exception) {
+      notify('some problems with blog addition')
+    }  
+    
   }
+
+
 
   const handleLikesOf = async (blog)=> {
     try {
+
       const changedBlog = {
         title:blog.title,
         author:blog.author,
@@ -108,13 +117,15 @@ const App = () => {
 
       await blogService.update(id, changedBlog)
       const renewedBlogs = await blogService.getAll()
-      setBlogs(renewedBlogs)
+      setBlogs(sortBlogs(renewedBlogs))
 
     } catch (exception) {
       notify(`something is wrong with updates due to likes handling`)
     }
 
   }
+
+  const sortBlogs = (blogs) => blogs.sort((b,a) => (a.likes-b.likes))
 
 if (user === null) {
   return (
