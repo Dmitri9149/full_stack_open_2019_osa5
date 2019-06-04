@@ -51,7 +51,7 @@ const App = () => {
 
   const notify = (message, type='success') => {
     setNotification({ message, type })
-    setTimeout(() => setNotification({ message: null }), 10000)
+    setTimeout(() => setNotification({ message: null }), 5000)
   }
   
   const handleLogin = async (event) => {
