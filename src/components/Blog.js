@@ -41,7 +41,7 @@ const Blog = ({ blog, handleLikes }) => {
               &ensp;
               likes
               &ensp;
-              <button onClick = {()=> handleLikes()}>
+              <button onClick = {handleLikes}>
                 like
               </button>
             </p>
