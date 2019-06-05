@@ -1,4 +1,4 @@
-import loginService from './services/login' 
+import loginService from './services/login'
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
@@ -34,32 +34,31 @@ const App = () => {
   const [newTitle, setNewTitle] = useState('')
   const [newUrl, setNewUrl] = useState('')
   const [newLikes, setNewLikes] = useState(0)
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState({
     message: null
   })
-  
   useEffect(() => {
     getAll()
   }, [])
 
 
   const getAll = async () => {
-    try { 
-    const blogs = await blogService.getAll()
+    try {
+      const blogs = await blogService.getAll()
       setBlogs( sortBlogs(blogs) )
     } catch(exception) {
       notify('something is wrong insied useEffect getting blogs')
-    }  
+    }
   }
 
   const notify = (message, type='success') => {
     setNotification({ message, type })
     setTimeout(() => setNotification({ message: null }), 5000)
   }
-  
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -72,23 +71,23 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      notify(`wrong username or password`)
+      notify('wrong username or password')
     }
   }
 
   const addBlog = async (event) => {
     try {
-    event.preventDefault()
+      event.preventDefault()
 
-    const blogObject = {
-      author: newAuthor,
-      title: newTitle,
-      url:newUrl,
-      likes:newLikes
-    }
+      const blogObject = {
+        author: newAuthor,
+        title: newTitle,
+        url:newUrl,
+        likes:newLikes
+      }
 
-    await blogService.create(blogObject)
-    const renewedBlogs = await blogService.getAll()
+      await blogService.create(blogObject)
+      const renewedBlogs = await blogService.getAll()
       setBlogs(sortBlogs(renewedBlogs))
       notify(`a new blog ${newTitle} by ${newAuthor} added`)
       setNewTitle('')
@@ -97,11 +96,10 @@ const App = () => {
       setNewLikes('')
     } catch(exception) {
       notify('some problems with blog addition')
-    }  
-    
+    }
   }
 
-  const handleLikesOf = async (blog)=> {
+  const handleLikesOf = async (blog) => {
     try {
 
       const changedBlog = {
@@ -119,13 +117,12 @@ const App = () => {
       setBlogs(sortBlogs(renewedBlogs))
 
     } catch (exception) {
-      notify(`something is wrong with updates due to likes handling`)
+      notify('something is wrong with updates due to likes handling')
     }
 
   }
 
   const deleteBlogOf = async (id) => {
-    
     try {
       console.log('id -------------->', id)
       const blog = blogs.find(blog => blog.id === id)
@@ -134,42 +131,40 @@ const App = () => {
         console.log('after delete method', res)
         const renewedBlogs = await blogService.getAll()
         setBlogs(sortBlogs(renewedBlogs))
-        notify(`the blog is deleted`)
+        notify('the blog is deleted')
       }
     } catch (exception) {
-        notify(`something is wrong with deliting of the blog`)
+      notify('something is wrong with deliting of the blog')
     }
   }
 
 
   const sortBlogs = (blogs) => blogs.sort((b,a) => (a.likes-b.likes))
 
-  const determineWhenVisible =  (blog, user) => { 
+  const determineWhenVisible =  (blog, user) => {
     const condition = (blog.user.username === user.username)
-    return {display: condition ? '' : 'none' }
+    return { display: condition ? '' : 'none' }
   }
 
-if (user === null) {
-  return (
-    <div>
-      <h2>Log in to application</h2>
+  if (user === null) {
+    return (
+      <div>
+        <h2>Log in to application</h2>
 
-      <Notification notification={notification} />
+        <Notification notification={notification} />
 
-      <Togglable buttonLabel='login'>
-        <LoginForm
-          username={username}
-          password={password}
-          handleUsernameChange={({ target }) => setUsername(target.value)}
-          handlePasswordChange={({ target }) => setPassword(target.value)}
-          handleSubmit={handleLogin}
-        />
-      </Togglable>
-        
-    </div>
-  )
-}
-  
+        <Togglable buttonLabel='login'>
+          <LoginForm
+            username={username}
+            password={password}
+            handleUsernameChange={({ target }) => setUsername(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
+          />
+        </Togglable>
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -182,33 +177,33 @@ if (user === null) {
         <button onClick = {() => {
           setUser(null)
           blogService.setToken(null)
-          }}
+        }}
         >
         logout
         </button>
       </div>
-        <h2>New Blog</h2>
-        <Togglable buttonLabel="new blog">
-          <BlogForm
-            addBlog={addBlog}
-            newTitle={newTitle}
-            newUrl={newUrl}
-            setNewUrl ={setNewUrl}
-            setNewAuthor = {setNewAuthor}
-            setNewTitle = {setNewTitle}
-          />
-        </Togglable>
+      <h2>New Blog</h2>
+      <Togglable buttonLabel="new blog">
+        <BlogForm
+          addBlog={addBlog}
+          newTitle={newTitle}
+          newUrl={newUrl}
+          setNewUrl ={setNewUrl}
+          setNewAuthor = {setNewAuthor}
+          setNewTitle = {setNewTitle}
+        />
+      </Togglable>
       <div>
 
       </div>
       {blogs.map(blog =>
-        <Blog 
-        key={blog.id}
-        blog={blog} 
-        handleLikes = {()=> handleLikesOf(blog)}
-        deleteBlog = {() => deleteBlogOf(blog.id)}
-        displayOrNot = {determineWhenVisible(blog, user)}
-      />
+        <Blog
+          key={blog.id}
+          blog={blog}
+          handleLikes = {() => handleLikesOf(blog)}
+          deleteBlog = {() => deleteBlogOf(blog.id)}
+          displayOrNot = {determineWhenVisible(blog, user)}
+        />
       )}
     </div>
   )

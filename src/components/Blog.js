@@ -20,60 +20,59 @@ const Blog = ({ blog, handleLikes, deleteBlog, displayOrNot }) => {
     displayOrNot:PropTypes.object.isRequired
   }
 
-  
-    const showAll = { display: loginVisible ? 'none' : '' }
-    const showPartly = { display: loginVisible ? '' : 'none' }
 
-    return (
-      
-      <div style = {blogStyle}>
-        <div style = {showPartly}>
-          <div onClick={() => setLoginVisible(false)}>
-            {blog.title} {blog.author}
-          </div>
+  const showAll = { display: loginVisible ? 'none' : '' }
+  const showPartly = { display: loginVisible ? '' : 'none' }
+
+  return (
+    <div style = {blogStyle}>
+      <div style = {showPartly}>
+        <div onClick={() => setLoginVisible(false)}>
+          {blog.title} {blog.author}
+        </div>
+      </div>
+
+      <div style = {showAll}>
+        <div onClick={() => setLoginVisible(true)}>
+          {blog.title} {blog.author}
         </div>
 
-        <div style = {showAll}>
-          <div onClick={() => setLoginVisible(true)}>
-            {blog.title} {blog.author}
-          </div>
-
-          <div>
+        <div>
           { blog.url}
-          </div>
+        </div>
 
-          <div>
-            <p>
+        <div>
+          <p>
               &ensp;
-              {blog.likes}
+            {blog.likes}
               &ensp;
               likes
               &ensp;
-              <button onClick = {handleLikes}>
+            <button onClick = {handleLikes}>
                 like
+            </button>
+          </p>
+          <p>
+              &ensp;
+              added by
+              &ensp;
+            {blog.user.name}
+              &ensp;
+          </p>
+          <div style = {displayOrNot } >
+            <p>
+                &ensp;
+              <button  onClick = {deleteBlog}>
+                  remove
               </button>
             </p>
-            <p>
-              &ensp;
-              added by 
-              &ensp;
-              {blog.user.name}
-              &ensp;
-            </p>
-            <div style = {displayOrNot } >
-              <p>
-                &ensp;
-                <button  onClick = {deleteBlog}>
-                  remove
-                </button>
-              </p>
-            </div>
           </div>
-
         </div>
 
       </div>
-    ) 
-  }
+
+    </div>
+  )
+}
 
 export default Blog

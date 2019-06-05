@@ -1,11 +1,11 @@
 import React from 'react'
 
 const BlogForm = ({
-  addBlog, 
+  addBlog,
   newTitle, setNewTitle,
-  newAuthor, setNewAuthor, 
+  newAuthor, setNewAuthor,
   newUrl, setNewUrl
- }) => {
+}) => {
   return(
     <div>
       <form onSubmit={addBlog}>
@@ -36,6 +36,5 @@ const BlogForm = ({
         <button type="submit">create</button>
       </form>
     </div>
-)}
-  
-  export default BlogForm
+  )}
+export default BlogForm
