@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 
 
@@ -10,6 +11,13 @@ const Blog = ({ blog, handleLikes, deleteBlog, displayOrNot }) => {
     border: 'solid',
     borderWidth: 1,
     marginBottom: 5
+  }
+
+  Blog.propTypes = {
+    blog: PropTypes.object.isRequired,
+    handleLikes: PropTypes.func.isRequired,
+    deleteBlog: PropTypes.func.isRequired,
+    displayOrNot:PropTypes.object.isRequired
   }
 
   
