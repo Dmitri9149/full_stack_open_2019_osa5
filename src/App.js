@@ -41,18 +41,17 @@ const App = () => {
     message: null
   })
   useEffect(() => {
+    const getAll = async () => {
+      try {
+        const blogs = await blogService.getAll()
+        setBlogs( sortBlogs(blogs) )
+      } catch(exception) {
+        notify('something is wrong insied useEffect getting blogs')
+      }
+    }
     getAll()
   }, [])
 
-
-  const getAll = async () => {
-    try {
-      const blogs = await blogService.getAll()
-      setBlogs( sortBlogs(blogs) )
-    } catch(exception) {
-      notify('something is wrong insied useEffect getting blogs')
-    }
-  }
 
   const notify = (message, type='success') => {
     setNotification({ message, type })
