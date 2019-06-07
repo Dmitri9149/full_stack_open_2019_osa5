@@ -1,7 +1,7 @@
 import React from 'react'
 import {
   render, waitForElement
-} from 'react-testing-library'
+} from '@testing-library/react'
 jest.mock('./services/blogs')
 import App from './App'
 
@@ -14,8 +14,9 @@ describe('<App />', () => {
 
     await waitForElement(
       () => component.getByText('kirjaudu')
-    ) 
+    )
 
-    // expectations here
+    const blogs = component.container.querySelectorAll('.blog')
+    expect(blogs.length).toBe(0)
   })
 })
