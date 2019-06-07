@@ -45,7 +45,9 @@ describe('< Blog />', () => {
   let component
   beforeEach(() => {
     component = render(
-      <Blog buttonLabel="show..." blog = {blog}>
+      <Blog buttonLabel="show..." blog = {blog} handleLikes = {() => {}}
+        displayOrNot = { { display:'none' } }  deleteBlog = {() => {}}
+      >
         <div className="testDiv" />
       </Blog>
     )
@@ -55,17 +57,21 @@ describe('< Blog />', () => {
   })
 
   test('at start the children are not displayed', () => {
-    const div = component.container.querySelector('.whenAllAreVisible')
+    const div1 = component.container.querySelector('.allAreVisible')
+    expect(div1).toHaveStyle('display: none')
+    const div2 = component.container.querySelector('.partlyVisible')
+    expect(div2).not.toHaveStyle('display: none')
 
-    expect(div).toHaveStyle('display: none')
   })
   test('after clicking the title, children are displayed', () => {
-    const title = component.container.querySelector('.clickTitle')
-    console.log('title------------>',title)
+    const title = component.container.querySelector('.clickWhenPartlyVisible')
     fireEvent.click(title)
 
-    const div = component.container.querySelector('.whenAllAreVisible')
-    expect(div).not.toHaveStyle('display: none')
+    const div1 = component.container.querySelector('.allAreVisible')
+    expect(div1).not.toHaveStyle('display: none')
+    const div2 = component.container.querySelector('.partlyVisible')
+    expect(div2).toHaveStyle('display: none')
+
   })
 
 

@@ -26,14 +26,14 @@ const Blog = ({ blog, handleLikes, deleteBlog, displayOrNot }) => {
 
   return (
     <div style = {blogStyle}>
-      <div style = {showPartly} >
-        <div onClick={() => setLoginVisible(false)}>
+      <div style = {showPartly} className = 'partlyVisible' >
+        <div onClick={() => setLoginVisible(false)} className = 'clickWhenPartlyVisible'>
           {blog.title} {blog.author}
         </div>
       </div>
 
-      <div style = {showAll} className = 'whenAllAreVisible'>
-        <div onClick={() => setLoginVisible(true)} className = 'allAreVisible'>
+      <div style = {showAll} className = 'allAreVisible'>
+        <div onClick={() => setLoginVisible(true)} className = 'clickWhenAllAreVisible'>
           {blog.title} {blog.author}
         </div>
 
