@@ -27,7 +27,6 @@ test('renders content', () => {
 
 
   const div = component.container.querySelector('.likes')
-  console.log(prettyDOM(div))
   expect(div).toBeDefined()
   expect(div).toHaveTextContent(
     'blog has 100 likes'
