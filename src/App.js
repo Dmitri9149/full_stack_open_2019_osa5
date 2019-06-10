@@ -40,6 +40,7 @@ const App = () => {
   const [notification, setNotification] = useState({
     message: null
   })
+
   useEffect(() => {
     const getAll = async () => {
       try {
@@ -50,6 +51,16 @@ const App = () => {
       }
     }
     getAll()
+  }, [])
+
+  useEffect(() => {
+
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      console.log('user................', user )
+    }
   }, [])
 
 
@@ -167,6 +178,7 @@ const App = () => {
 
   return (
     <div>
+      ---
       <h2>blogs</h2>
 
       <Notification notification={notification} />
