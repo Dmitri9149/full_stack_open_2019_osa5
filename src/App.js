@@ -5,6 +5,7 @@ import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
+import  { useField } from './hooks'
 
 const Notification = ({ notification }) => {
   if (notification.message === null) {
@@ -40,6 +41,9 @@ const App = () => {
   const [notification, setNotification] = useState({
     message: null
   })
+
+  const username = useField('text')
+  const password = useField('password')
 
   useEffect(() => {
     const getAll = async () => {
@@ -165,10 +169,9 @@ const App = () => {
 
         <Togglable buttonLabel='login'>
           <LoginForm
-            username={username}
-            password={password}
-            handleUsernameChange={({ target }) => setUsername(target.value)}
-            handlePasswordChange={({ target }) => setPassword(target.value)}
+            {...username}
+            {...password}
+
             handleSubmit={handleLogin}
           />
         </Togglable>
