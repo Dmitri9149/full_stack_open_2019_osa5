@@ -1,12 +1,9 @@
 import React from 'react'
 
 const LoginForm = ({
-  handleSubmit,
-  handleUsernameChange,
-  handlePasswordChange,
-  username,
-  password
+  handleSubmit, username, password
 }) => {
+  console.log('username, password from Form......', username, password)
   return (
     <div>
       <h2>Kirjaudu</h2>
@@ -15,16 +12,17 @@ const LoginForm = ({
         <div>
           käyttäjätunnus
           <input
-            value={username}
-            onChange={handleUsernameChange}
+            type = {username.type}
+            value = {username.value}
+            onChange = {username.OnChange}
           />
         </div>
         <div>
           salasana
           <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
+            type = {password.type}
+            value = {password.value}
+            onChange = {password.OnChange}
           />
         </div>
         <button type="submit">kirjaudu</button>

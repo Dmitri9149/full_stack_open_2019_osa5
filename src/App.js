@@ -35,8 +35,7 @@ const App = () => {
   const [newTitle, setNewTitle] = useState('')
   const [newUrl, setNewUrl] = useState('')
   const [newLikes, setNewLikes] = useState(0)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState({
     message: null
@@ -76,14 +75,17 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
+      const valueUser = username.value
+      const valuePassw = username.password
+      console.log('username, password......', username, password)
       const user = await loginService.login({
-        username, password,
+        valueUser, valuePassw
       })
 
       await blogService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
+      username.localStorage = ''
+      password.localStorage = ''
     } catch (exception) {
       notify('wrong username or password')
     }
@@ -169,8 +171,8 @@ const App = () => {
 
         <Togglable buttonLabel='login'>
           <LoginForm
-            {...username}
-            {...password}
+            username ={username}
+            password = {password}
 
             handleSubmit={handleLogin}
           />
