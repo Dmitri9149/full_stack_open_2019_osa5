@@ -11,17 +11,15 @@ const LoginForm = ({
         <div>
           käyttäjätunnus
           <input
-            type = {username.type}
-            value = {username.value}
-            onChange = {username.onChange}
+            {...username}
+            reset = '*'
           />
         </div>
         <div>
           salasana
           <input
-            type = {password.type}
-            value = {password.value}
-            onChange = {password.onChange}
+            {...password}
+            reset ='*'
           />
         </div>
         <button type="submit">kirjaudu</button>

@@ -203,7 +203,7 @@ const App = () => {
           addBlog={addBlog}
           newTitle={newTitle}
           newUrl={newUrl}
-          newAuthor = {newAuthor}
+          newAuthor = { newAuthor }
         />
       </Togglable>
       <div>

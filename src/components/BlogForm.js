@@ -12,24 +12,23 @@ const BlogForm = ({
         <div>
           title
           <input
-            type = {newTitle.type}
-            value={newTitle.value}
+            {...newTitle}
             name= 'newtitle'
-            onChange={newTitle.onChange}
+            reset = '*'
           />
         </div>
         <div>
           author
           <input
-            value={newAuthor.value}
-            onChange={newAuthor.onChange}
+            {...newAuthor}
+            reset = '*'
           />
         </div>
         <div>
           url
           <input
-            value={newUrl.value}
-            onChange={newUrl.onChange}
+            {...newUrl}
+            reset ='*'
           />
         </div>
 
