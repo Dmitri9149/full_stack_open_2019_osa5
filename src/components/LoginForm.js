@@ -14,7 +14,7 @@ const LoginForm = ({
           <input
             type = {username.type}
             value = {username.value}
-            onChange = {username.OnChange}
+            onChange = {username.onChange}
           />
         </div>
         <div>
@@ -22,7 +22,7 @@ const LoginForm = ({
           <input
             type = {password.type}
             value = {password.value}
-            onChange = {password.OnChange}
+            onChange = {password.onChange}
           />
         </div>
         <button type="submit">kirjaudu</button>
