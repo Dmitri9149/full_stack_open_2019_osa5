@@ -56,7 +56,6 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
-      console.log('user................', user )
     }
   }, [])
 
@@ -76,7 +75,6 @@ const App = () => {
     event.preventDefault()
     try {
 
-      console.log('username, password, iserLogin......' )
       const user = await loginService.login({
         username:username.value, password:password.value
       })
@@ -95,16 +93,16 @@ const App = () => {
       event.preventDefault()
 
       const blogObject = {
-        author: newAuthor,
-        title: newTitle,
-        url:newUrl,
+        author: newAuthor.value,
+        title: newTitle.value,
+        url:newUrl.value,
         likes:newLikes
       }
 
       await blogService.create(blogObject)
       const renewedBlogs = await blogService.getAll()
       setBlogs(sortBlogs(renewedBlogs))
-      notify(`a new blog ${newTitle} by ${newAuthor} added`)
+      notify(`a new blog ${newTitle.value} by ${newAuthor.value} added`)
       newTitle.reset()
       newAuthor.reset()
       newUrl.reset()
@@ -191,6 +189,8 @@ const App = () => {
       <div>
         <button onClick = {() => {
           setUser(null)
+          username.reset()
+          password.reset()
           blogService.setToken(null)
         }}
         >

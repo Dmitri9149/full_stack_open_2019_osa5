@@ -3,7 +3,6 @@ import React from 'react'
 const LoginForm = ({
   handleSubmit, username, password
 }) => {
-  console.log('username, password from Form......', username, password)
   return (
     <div>
       <h2>Kirjaudu</h2>
