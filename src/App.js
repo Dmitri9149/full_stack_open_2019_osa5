@@ -41,8 +41,6 @@ const App = () => {
     message: null
   })
 
-  const username = useField('text')
-  const password = useField('password')
 
   useEffect(() => {
     const getAll = async () => {
@@ -66,6 +64,9 @@ const App = () => {
     }
   }, [])
 
+  const username = useField('text')
+  const password = useField('password')
+
 
   const notify = (message, type='success') => {
     setNotification({ message, type })
@@ -75,17 +76,16 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      const valueUser = username.value
-      const valuePassw = username.password
-      console.log('username, password......', username, password)
+
+      console.log('username, password, iserLogin......' )
       const user = await loginService.login({
-        valueUser, valuePassw
+        username:username.value, password:password.value
       })
+
+      console.log('user...........', user)
 
       await blogService.setToken(user.token)
       setUser(user)
-      username.localStorage = ''
-      password.localStorage = ''
     } catch (exception) {
       notify('wrong username or password')
     }

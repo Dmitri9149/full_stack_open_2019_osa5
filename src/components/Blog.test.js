@@ -2,8 +2,6 @@ import React from 'react'
 import 'jest-dom/extend-expect'
 import { render, cleanup, fireEvent } from '@testing-library/react'
 import Blog from './Blog'
-import { prettyDOM } from '@testing-library/dom'
-
 afterEach(cleanup)
 
 
