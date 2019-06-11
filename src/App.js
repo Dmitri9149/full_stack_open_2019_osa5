@@ -31,11 +31,7 @@ const Notification = ({ notification }) => {
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newTitle, setNewTitle] = useState('')
-  const [newUrl, setNewUrl] = useState('')
   const [newLikes, setNewLikes] = useState(0)
-
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState({
     message: null
@@ -66,6 +62,9 @@ const App = () => {
 
   const username = useField('text')
   const password = useField('password')
+  const newTitle = useField('text')
+  const newUrl = useField('text')
+  const newAuthor = useField('text')
 
 
   const notify = (message, type='success') => {
@@ -106,9 +105,9 @@ const App = () => {
       const renewedBlogs = await blogService.getAll()
       setBlogs(sortBlogs(renewedBlogs))
       notify(`a new blog ${newTitle} by ${newAuthor} added`)
-      setNewTitle('')
-      setNewAuthor('')
-      setNewUrl('')
+      newTitle.reset()
+      newAuthor.reset()
+      newUrl.reset()
       setNewLikes('')
     } catch(exception) {
       notify('some problems with blog addition')
@@ -204,9 +203,7 @@ const App = () => {
           addBlog={addBlog}
           newTitle={newTitle}
           newUrl={newUrl}
-          setNewUrl ={setNewUrl}
-          setNewAuthor = {setNewAuthor}
-          setNewTitle = {setNewTitle}
+          newAuthor = {newAuthor}
         />
       </Togglable>
       <div>
